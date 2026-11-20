@@ -1,0 +1,6 @@
+[
+  { "file": "1-dashboard.jpg", "path": "/", "viewport": { "width": 1280, "height": 800 } },
+  { "file": "2-roadmap.jpg", "path": "/", "tab": "roadmap", "viewport": { "width": 1280, "height": 800 } },
+  { "file": "3-guide-detail.jpg", "path": "/", "tab": "trophies", "category": "missable", "viewport": { "width": 1280, "height": 800 } },
+  { "file": "4-missables-spoilers.jpg", "path": "/", "tab": "missables", "viewport": { "width": 1280, "height": 800 } }
+]
