@@ -2,8 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>GTA VI Trophy Guide & Platinum Tracker | Leonida Field Dossier</title>
+<meta name="description" content="Official GTA VI Trophy Guide & Platinum Tracker. 55 trophies, 4-stage roadmap, missable warnings, offline save backup, and verified field strategies.">
+<meta name="keywords" content="GTA 6, Grand Theft Auto VI, Trophy Guide, Platinum Tracker, Roadmap, Missables, PS5 Trophies, Leonida">
+<meta name="theme-color" content="#070913">
+<meta property="og:title" content="GTA VI Trophy Guide & Platinum Tracker | Leonida Field Dossier">
+<meta property="og:description" content="Official 55 Trophies, Strategic Field Guide, 4-Stage Platinum Roadmap, and Offline Tracker.">
+<meta property="og:type" content="website">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -91,82 +97,95 @@
   </section>
 
   <!-- Main View Navigation Tabs -->
-  <nav class="nav-tabs" aria-label="Main Navigation">
-    <button class="nav-tab active" data-tab="trophies" type="button">
+  <nav class="nav-tabs" role="tablist" aria-label="Main Navigation">
+    <button class="nav-tab active" data-tab="trophies" role="tab" aria-selected="true" aria-controls="tab-trophies" aria-label="Trophies and Guides Checklist (Hotkey: T)" type="button">
       <span class="tab-icon">🏆</span>
       <span class="tab-label">Trophies & Guides</span>
+      <kbd class="kbd-badge" title="Press T to jump to Trophies">T</kbd>
       <span class="tab-badge" id="tabTotalBadge">55</span>
     </button>
-    <button class="nav-tab" data-tab="roadmap" type="button">
+    <button class="nav-tab" data-tab="roadmap" role="tab" aria-selected="false" aria-controls="tab-roadmap" aria-label="Platinum Roadmap Strategy (Hotkey: R)" type="button">
       <span class="tab-icon">🗺️</span>
       <span class="tab-label">Platinum Roadmap</span>
+      <kbd class="kbd-badge" title="Press R to jump to Roadmap">R</kbd>
       <span class="tab-badge info-badge">4 Stages</span>
     </button>
-    <button class="nav-tab" data-tab="missables" type="button">
+    <button class="nav-tab" data-tab="missables" role="tab" aria-selected="false" aria-controls="tab-missables" aria-label="Missables Point-of-No-Return Alert (Hotkey: M)" type="button">
       <span class="tab-icon">⚠️</span>
       <span class="tab-label">Missables Alert</span>
+      <kbd class="kbd-badge" title="Press M to jump to Missables">M</kbd>
       <span class="tab-badge warn-badge">5 High Alert</span>
     </button>
-    <button class="nav-tab" data-tab="backup" type="button">
+    <button class="nav-tab" data-tab="backup" role="tab" aria-selected="false" aria-controls="tab-backup" aria-label="Backup and Data Management" type="button">
       <span class="tab-icon">💾</span>
       <span class="tab-label">Backup & Data</span>
     </button>
   </nav>
 
   <!-- TAB 1: TROPHIES & GUIDES -->
-  <main id="tab-trophies" class="tab-pane active">
+  <main id="tab-trophies" class="tab-pane active" role="tabpanel" aria-labelledby="tab-trophies">
     <!-- Filter Toolbar -->
     <div class="filter-toolbar">
+      <!-- Shortcuts Quick Bar -->
+      <div class="shortcuts-bar" aria-label="Tactical Keyboard Shortcuts">
+        <span class="shortcuts-title">⚡ Hotkeys:</span>
+        <span class="shortcut-chip"><kbd class="kbd-badge">/</kbd> Focus Search</span>
+        <span class="shortcut-chip"><kbd class="kbd-badge">Esc</kbd> Clear Query</span>
+        <span class="shortcut-chip"><kbd class="kbd-badge">T</kbd> Trophy List</span>
+        <span class="shortcut-chip"><kbd class="kbd-badge">R</kbd> Roadmap</span>
+        <span class="shortcut-chip"><kbd class="kbd-badge">M</kbd> Missables</span>
+      </div>
+
       <div class="search-box-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="search" id="searchInput" placeholder="Search by trophy title, requirements, or strategy... (Press '/' to focus)" aria-label="Search trophies">
-        <span class="kbd-hint">/</span>
-        <button id="clearSearchBtn" class="clear-btn" type="button" title="Clear search">✕</button>
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input type="search" id="searchInput" placeholder="Search by trophy title, requirements, or strategy... (Press '/' to focus)" aria-label="Search trophies by title, description, or tactical guide">
+        <kbd class="kbd-hint" title="Press / to focus">/</kbd>
+        <button id="clearSearchBtn" class="clear-btn" type="button" aria-label="Clear search input (or press Escape)" title="Clear search">✕</button>
       </div>
 
       <div class="filters-row">
         <!-- Category Filter Pills -->
         <div class="filter-group category-group">
           <span class="filter-heading">Category:</span>
-          <div class="pill-group" id="categoryPills">
-            <button class="pill active" data-category="all" type="button">All (<span id="catCountAll">55</span>)</button>
-            <button class="pill" data-category="story" type="button">Story (<span id="catCountStory">18</span>)</button>
-            <button class="pill alert-pill" data-category="missable" type="button">Missable (<span id="catCountMissable">5</span>)</button>
-            <button class="pill" data-category="collectibles" type="button">Collectibles (<span id="catCountCollectibles">8</span>)</button>
-            <button class="pill" data-category="activities" type="button">Activities (<span id="catCountActivities">24</span>)</button>
+          <div class="pill-group" id="categoryPills" role="group" aria-label="Filter by trophy category">
+            <button class="pill active" data-category="all" aria-label="Filter all 55 trophies" type="button">All (<span id="catCountAll">55</span>)</button>
+            <button class="pill" data-category="story" aria-label="Filter 18 main campaign story trophies" type="button">Story (<span id="catCountStory">18</span>)</button>
+            <button class="pill alert-pill" data-category="missable" aria-label="Filter 5 missable trophies" type="button">Missable (<span id="catCountMissable">5</span>)</button>
+            <button class="pill" data-category="collectibles" aria-label="Filter 8 collectible trophies" type="button">Collectibles (<span id="catCountCollectibles">8</span>)</button>
+            <button class="pill" data-category="activities" aria-label="Filter 24 open-world activities and mini-game trophies" type="button">Activities (<span id="catCountActivities">24</span>)</button>
           </div>
         </div>
 
         <!-- Grade Filter Pills -->
         <div class="filter-group grade-group">
           <span class="filter-heading">Grade:</span>
-          <div class="pill-group" id="gradePills">
-            <button class="pill active" data-grade="all" type="button">All</button>
-            <button class="pill" data-grade="platinum" type="button">Platinum</button>
-            <button class="pill" data-grade="gold" type="button">Gold</button>
-            <button class="pill" data-grade="silver" type="button">Silver</button>
-            <button class="pill" data-grade="bronze" type="button">Bronze</button>
+          <div class="pill-group" id="gradePills" role="group" aria-label="Filter by trophy grade">
+            <button class="pill active" data-grade="all" aria-label="Filter all grades" type="button">All</button>
+            <button class="pill" data-grade="platinum" aria-label="Filter Platinum trophy" type="button">Platinum</button>
+            <button class="pill" data-grade="gold" aria-label="Filter Gold trophies" type="button">Gold</button>
+            <button class="pill" data-grade="silver" aria-label="Filter Silver trophies" type="button">Silver</button>
+            <button class="pill" data-grade="bronze" aria-label="Filter Bronze trophies" type="button">Bronze</button>
           </div>
         </div>
 
         <!-- Status Filter Pills -->
         <div class="filter-group status-group">
           <span class="filter-heading">Status:</span>
-          <div class="pill-group" id="statusPills">
-            <button class="pill active" data-status="all" type="button">All</button>
-            <button class="pill" data-status="earned" type="button">Earned</button>
-            <button class="pill" data-status="unearned" type="button">Unearned</button>
+          <div class="pill-group" id="statusPills" role="group" aria-label="Filter by earned status">
+            <button class="pill active" data-status="all" aria-label="Show all trophies" type="button">All</button>
+            <button class="pill" data-status="earned" aria-label="Show only earned trophies" type="button">Earned</button>
+            <button class="pill" data-status="unearned" aria-label="Show only unearned trophies" type="button">Unearned</button>
           </div>
         </div>
       </div>
 
       <!-- Active Filters Summary & Batch Toggle -->
       <div class="filter-meta-bar">
-        <span id="resultsCount">Showing 55 trophies</span>
+        <span id="resultsCount" aria-live="polite">Showing 55 trophies</span>
         <div class="meta-actions">
-          <button id="expandAllGuidesBtn" class="meta-btn" type="button">📖 Expand All Guides</button>
-          <button id="collapseAllGuidesBtn" class="meta-btn" type="button">📁 Collapse All</button>
-          <button id="resetFiltersBtn" class="meta-btn" type="button">↺ Reset Filters</button>
+          <button id="expandAllGuidesBtn" class="meta-btn" aria-label="Expand all walkthrough guides" type="button">📖 Expand All Guides</button>
+          <button id="collapseAllGuidesBtn" class="meta-btn" aria-label="Collapse all walkthrough guides" type="button">📁 Collapse All</button>
+          <button id="resetFiltersBtn" class="meta-btn" aria-label="Reset all search queries and active filters" type="button">↺ Reset Filters</button>
         </div>
       </div>
     </div>
@@ -178,7 +197,7 @@
   </main>
 
   <!-- TAB 2: PLATINUM ROADMAP -->
-  <section id="tab-roadmap" class="tab-pane">
+  <section id="tab-roadmap" class="tab-pane" role="tabpanel" aria-labelledby="tab-roadmap">
     <div class="roadmap-header-card">
       <div class="roadmap-meta-grid">
         <div class="roadmap-meta-item">
@@ -311,7 +330,7 @@
   </section>
 
   <!-- TAB 3: MISSABLES ALERT -->
-  <section id="tab-missables" class="tab-pane">
+  <section id="tab-missables" class="tab-pane" role="tabpanel" aria-labelledby="tab-missables">
     <div class="missables-header-card">
       <div class="alert-icon-large">⚠️</div>
       <div class="alert-header-text">
@@ -349,14 +368,14 @@
   </section>
 
   <!-- TAB 4: BACKUP & DATA -->
-  <section id="tab-backup" class="tab-pane">
+  <section id="tab-backup" class="tab-pane" role="tabpanel" aria-labelledby="tab-backup">
     <div class="backup-grid">
       <!-- Export Card -->
       <div class="action-card">
         <div class="action-card-icon">📤</div>
         <h3>Export Progress Backup</h3>
         <p>Download a local JSON backup of your current trophy checks, earned dates, and roadmap completion status.</p>
-        <button id="exportBtn" class="action-btn cyan-btn" type="button">Download trophy-progress.json</button>
+        <button id="exportBtn" class="action-btn cyan-btn" aria-label="Export and download trophy-progress.json backup file" type="button">Download trophy-progress.json</button>
       </div>
 
       <!-- Import Card -->
@@ -366,7 +385,7 @@
         <p>Restore your saved progress from a previously downloaded JSON file. Works offline across all browsers.</p>
         <label class="file-upload-btn action-btn magenta-btn">
           <span>Upload Backup File</span>
-          <input id="importInput" type="file" accept="application/json">
+          <input id="importInput" type="file" accept="application/json" aria-label="Upload and restore trophy backup JSON file">
         </label>
       </div>
 
@@ -376,9 +395,9 @@
         <h3>Quick Testing Presets</h3>
         <p>Convenient shortcuts for testing and verifying tracker states across multiple scenarios.</p>
         <div class="preset-buttons">
-          <button id="presetStoryBtn" class="preset-btn" type="button">Mark Story Trophies Earned (18)</button>
-          <button id="presetMissablesBtn" class="preset-btn" type="button">Mark Missables Earned (5)</button>
-          <button id="presetAllBtn" class="preset-btn" type="button">Mark All 55 Earned (Platinum)</button>
+          <button id="presetStoryBtn" class="preset-btn" aria-label="Quick preset: Mark 18 story campaign trophies earned" type="button">Mark Story Trophies Earned (18)</button>
+          <button id="presetMissablesBtn" class="preset-btn" aria-label="Quick preset: Mark 5 missable trophies earned" type="button">Mark Missables Earned (5)</button>
+          <button id="presetAllBtn" class="preset-btn" aria-label="Quick preset: Mark all 55 trophies earned" type="button">Mark All 55 Earned (Platinum)</button>
         </div>
       </div>
 
@@ -387,7 +406,7 @@
         <div class="action-card-icon">🗑️</div>
         <h3>Reset All Progress</h3>
         <p>Permanently clear all saved trophy checkboxes and revert progress back to zero. Cannot be undone.</p>
-        <button id="resetAllBtn" class="action-btn red-btn" type="button">Reset All Trophy Checks</button>
+        <button id="resetAllBtn" class="action-btn red-btn" aria-label="Reset all trophy progress to zero percent" type="button">Reset All Trophy Checks</button>
       </div>
     </div>
   </section>

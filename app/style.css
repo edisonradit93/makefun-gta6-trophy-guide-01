@@ -55,6 +55,33 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Custom Scrollbar with Neon Pink Thumb */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070913;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-magenta), #c026d3);
+  border-radius: var(--radius-pill);
+  border: 2px solid #070913;
+  box-shadow: 0 0 10px var(--neon-magenta-glow);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff2a9d, #e879f9);
+  box-shadow: 0 0 16px rgba(255, 0, 127, 0.7);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--neon-magenta) #070913;
+}
+
 /* Ambient glow accents */
 .ambient-glow {
   position: fixed;
@@ -577,19 +604,35 @@ body {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 16px 18px;
-  transition: var(--transition);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  animation: cardFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .trophy-card:hover {
   background: var(--bg-card-hover);
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(0, 240, 255, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5),
+              0 0 20px rgba(0, 240, 255, 0.22),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .trophy-card.earned {
   background: rgba(16, 26, 42, 0.6);
   border-color: rgba(16, 185, 129, 0.3);
+}
+
+.trophy-card.earned:hover {
+  border-color: rgba(16, 185, 129, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5),
+              0 0 20px rgba(16, 185, 129, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .trophy-card.earned::before {
@@ -1254,6 +1297,84 @@ body {
 
 .danger-card {
   border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Micro-animations */
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.7;
+    filter: drop-shadow(0 0 4px var(--neon-cyan));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px var(--neon-cyan));
+  }
+}
+
+/* Shortcuts Bar & Keyboard Badges */
+.shortcuts-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+  padding: 6px 12px;
+  background: rgba(13, 17, 36, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.shortcuts-title {
+  font-weight: 700;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+}
+
+.shortcut-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-muted);
+}
+
+.kbd-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 1px 5px;
+  min-width: 18px;
+  height: 18px;
+  line-height: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 4px;
+  color: var(--neon-cyan);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 6px rgba(0, 240, 255, 0.15);
+  transition: all 0.15s ease;
+}
+
+.nav-tab:hover .kbd-badge {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan-glow);
+  transform: scale(1.08);
 }
 
 .kbd-hint {
