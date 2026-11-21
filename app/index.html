@@ -3,23 +3,438 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>GTA VI Platinum Compendium &amp; Tracker | Leonida State Complete Trophy Guide</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
-</header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
+<div class="app-container">
+  <!-- Top Ambient Glows -->
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="ambient-glow glow-pink"></div>
+
+  <!-- Header & Navigation -->
+  <header class="app-header">
+    <div class="header-branding">
+      <div class="logo-badge">GTA VI</div>
+      <div>
+        <h1 class="app-title">GTA VI Platinum Compendium &amp; Tracker</h1>
+        <p class="app-subtitle">Leonida State Complete Trophy Guide</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="spoiler-toggle-wrapper">
+        <span class="spoiler-label">🛡️ Spoiler Shield</span>
+        <button id="spoilerToggle" class="toggle-btn active" type="button" aria-pressed="true" title="Toggle spoiler protection for story and secret trophies">
+          <span class="toggle-indicator"></span>
+          <span class="toggle-text">Active</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Summary Cards Section -->
+  <section class="summary-section" aria-label="Trophy Overview &amp; Summary">
+    <div class="summary-cards-grid">
+      <!-- Total Trophies -->
+      <div class="summary-card total-card">
+        <div class="summary-card-header">
+          <span class="summary-icon">🏆</span>
+          <span class="summary-label">Total Trophies</span>
+        </div>
+        <div class="summary-main-val">55</div>
+        <div class="summary-sub" id="earnedSummary">0 of 55 Earned</div>
+      </div>
+
+      <!-- Platinum Progress % -->
+      <div class="summary-card progress-card">
+        <div class="summary-card-header">
+          <span class="summary-icon">⚡</span>
+          <span class="summary-label">Platinum Progress</span>
+          <span class="progress-pct-badge" id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+        <div class="summary-sub" id="progressRemaining">55 remaining to Platinum</div>
+      </div>
+
+      <!-- PSN Points Total -->
+      <div class="summary-card points-card">
+        <div class="summary-card-header">
+          <span class="summary-icon">🎮</span>
+          <span class="summary-label">PSN Points</span>
+        </div>
+        <div class="summary-main-val" id="pointsSummary">0 / 1,350</div>
+        <div class="summary-sub">PTS (Plat 300 &middot; Gold 90 &middot; Silver 30 &middot; Bronze 15)</div>
+      </div>
+
+      <!-- Missable Count Warning Pill -->
+      <div class="summary-card missable-card" data-filter-category="missable">
+        <div class="summary-card-header">
+          <span class="summary-icon">⚠️</span>
+          <span class="summary-label">Missable Alert</span>
+          <span class="warning-pill-tag">5 High Alert</span>
+        </div>
+        <div class="summary-main-val warn-text" id="countMissable">0 / 5</div>
+        <div class="summary-sub">Critical companion &amp; branch milestones</div>
+      </div>
+    </div>
+
+    <!-- Trophy Breakdown Counters -->
+    <div class="trophy-counters-grid">
+      <div class="counter-card counter-platinum" data-filter-grade="platinum" title="Filter by Platinum">
+        <div class="counter-icon">🏆</div>
+        <div class="counter-details">
+          <span class="counter-label">Platinum</span>
+          <span class="counter-value" id="countPlatinum">0 / 1</span>
+        </div>
+      </div>
+      <div class="counter-card counter-gold" data-filter-grade="gold" title="Filter by Gold">
+        <div class="counter-icon">🥇</div>
+        <div class="counter-details">
+          <span class="counter-label">Gold</span>
+          <span class="counter-value" id="countGold">0 / 2</span>
+        </div>
+      </div>
+      <div class="counter-card counter-silver" data-filter-grade="silver" title="Filter by Silver">
+        <div class="counter-icon">🥈</div>
+        <div class="counter-details">
+          <span class="counter-label">Silver</span>
+          <span class="counter-value" id="countSilver">0 / 6</span>
+        </div>
+      </div>
+      <div class="counter-card counter-bronze" data-filter-grade="bronze" title="Filter by Bronze">
+        <div class="counter-icon">🥉</div>
+        <div class="counter-details">
+          <span class="counter-label">Bronze</span>
+          <span class="counter-value" id="countBronze">0 / 46</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main View Navigation Tabs -->
+  <nav class="nav-tabs" aria-label="Main Navigation">
+    <button class="nav-tab active" data-tab="trophies" type="button" id="navTabTrophies">
+      <span class="tab-icon">🏆</span>
+      <span class="tab-label">Trophies &amp; Guides</span>
+      <span class="tab-badge" id="tabTotalBadge">55</span>
+    </button>
+    <button class="nav-tab" data-tab="roadmap" type="button" id="navTabRoadmap">
+      <span class="tab-icon">🗺️</span>
+      <span class="tab-label">Platinum Roadmap</span>
+      <span class="tab-badge info-badge">4 Stages</span>
+    </button>
+    <button class="nav-tab" data-tab="missables" type="button" id="navTabMissables">
+      <span class="tab-icon">⚠️</span>
+      <span class="tab-label">Missables Alert</span>
+      <span class="tab-badge warn-badge">5 High Alert</span>
+    </button>
+    <button class="nav-tab" data-tab="backup" type="button" id="navTabBackup">
+      <span class="tab-icon">💾</span>
+      <span class="tab-label">Backup &amp; Data</span>
+    </button>
+  </nav>
+
+  <!-- TAB 1: TROPHIES & GUIDES -->
+  <main id="tab-trophies" class="tab-pane active">
+    <!-- Filter Toolbar -->
+    <div class="filter-toolbar">
+      <div class="search-box-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="search" id="searchInput" placeholder="Search by trophy title, requirements, or strategy... (Press '/' to focus)" aria-label="Search trophies">
+        <span class="kbd-hint">/</span>
+        <button id="clearSearchBtn" class="clear-btn" type="button" title="Clear search">✕</button>
+      </div>
+
+      <div class="filters-row">
+        <!-- Category Filter Buttons -->
+        <div class="filter-group category-group">
+          <span class="filter-heading">Category:</span>
+          <div class="pill-group" id="categoryPills">
+            <button class="pill active" data-category="all" type="button">All (<span id="catCountAll">55</span>)</button>
+            <button class="pill" data-category="story" type="button">Story (<span id="catCountStory">18</span>)</button>
+            <button class="pill alert-pill" data-category="missable" type="button">Missables (<span id="catCountMissable">5</span>)</button>
+            <button class="pill" data-category="collectibles" type="button">Collectibles (<span id="catCountCollectibles">8</span>)</button>
+            <button class="pill" data-category="activities" type="button">Activities (<span id="catCountActivities">24</span>)</button>
+          </div>
+        </div>
+
+        <!-- Grade Filter Buttons -->
+        <div class="filter-group grade-group">
+          <span class="filter-heading">Grade:</span>
+          <div class="pill-group" id="gradePills">
+            <button class="pill active" data-grade="all" type="button">All</button>
+            <button class="pill" data-grade="platinum" type="button">Platinum</button>
+            <button class="pill" data-grade="gold" type="button">Gold</button>
+            <button class="pill" data-grade="silver" type="button">Silver</button>
+            <button class="pill" data-grade="bronze" type="button">Bronze</button>
+          </div>
+        </div>
+
+        <!-- Status Filter Buttons -->
+        <div class="filter-group status-group">
+          <span class="filter-heading">Status:</span>
+          <div class="pill-group" id="statusPills">
+            <button class="pill active" data-status="all" type="button">All</button>
+            <button class="pill" data-status="earned" type="button">Earned</button>
+            <button class="pill" data-status="unearned" type="button">Unearned</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Filters Summary & Batch Toggle -->
+      <div class="filter-meta-bar">
+        <span id="resultsCount">Showing 55 trophies</span>
+        <div class="meta-actions">
+          <button id="expandAllGuidesBtn" class="meta-btn" type="button">📖 Expand All Guides</button>
+          <button id="collapseAllGuidesBtn" class="meta-btn" type="button">📁 Collapse All</button>
+          <button id="resetFiltersBtn" class="meta-btn" type="button">↺ Reset Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trophy List Container -->
+    <div id="trophyList" class="trophy-list" role="list">
+      <!-- Dynamic trophy cards populated by app.js -->
+    </div>
+  </main>
+
+  <!-- TAB 2: PLATINUM ROADMAP -->
+  <section id="tab-roadmap" class="tab-pane">
+    <div class="roadmap-header-card">
+      <div class="roadmap-meta-grid">
+        <div class="roadmap-meta-item">
+          <span class="meta-title">Estimated Time</span>
+          <span class="meta-val">75 - 90 Hours</span>
+        </div>
+        <div class="roadmap-meta-item">
+          <span class="meta-title">Difficulty Rating</span>
+          <span class="meta-val highlight-cyan">4 / 10 (Moderate)</span>
+        </div>
+        <div class="roadmap-meta-item">
+          <span class="meta-title">Minimum Playthroughs</span>
+          <span class="meta-val highlight-pink">1 Playthrough</span>
+        </div>
+        <div class="roadmap-meta-item">
+          <span class="meta-title">Missable Trophies</span>
+          <span class="meta-val alert-text">5 Critical</span>
+        </div>
+        <div class="roadmap-meta-item">
+          <span class="meta-title">Free Roam Post-Game</span>
+          <span class="meta-val highlight-green">Fully Open</span>
+        </div>
+      </div>
+      <p class="roadmap-lead">
+        Follow this 4-stage sequential blueprint to earn the GTA VI Platinum in a single seamless playthrough without locking yourself out of partner-dependent missables.
+      </p>
+    </div>
+
+    <div class="roadmap-stages">
+      <!-- Stage 1 -->
+      <article class="stage-card">
+        <div class="stage-badge">Stage 1</div>
+        <div class="stage-content">
+          <div class="stage-header">
+            <h3>Main Story &amp; Avoid Missables</h3>
+            <span class="stage-time">Approx. 35 - 40 Hours</span>
+          </div>
+          <p class="stage-desc">
+            Play through the main storyline across Chapters 1 through 5. Enjoy the narrative, but be extremely vigilant during Chapters 2 and 3: whenever free-roam opens up with Lucia and Jason paired together in the same vehicle, immediately knock out the companion-dependent missable trophies before late-game narrative splits.
+          </p>
+          <div class="stage-milestones">
+            <span class="milestone-label">Key Milestones &amp; Actions:</span>
+            <ul>
+              <li><strong>Sneakthief:</strong> Complete an undetected jewelry store heist during early freelance burglaries in Chapter 2.</li>
+              <li><strong>Retail Therapy:</strong> Hit 3 convenience marts back-to-back with your partner while maintaining your Wanted heat in Little Haiti.</li>
+              <li><strong>Hot Together:</strong> Raise your Wanted Level to 4 stars with your partner and successfully evade police via transit tunnels or spray shops.</li>
+              <li><strong>Personal Best:</strong> Hang out, share heist takes, and max out dual-character synergy before Chapter 4 climax.</li>
+              <li><strong>Actions Speak Louder:</strong> Create a manual backup save at the start of Chapter 4 before executing the syndicate informant decision.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stage 2 -->
+      <article class="stage-card">
+        <div class="stage-badge">Stage 2</div>
+        <div class="stage-content">
+          <div class="stage-header">
+            <h3>Strangers &amp; Freaks Side Missions</h3>
+            <span class="stage-time">Approx. 12 - 15 Hours</span>
+          </div>
+          <p class="stage-desc">
+            Venture across Leonida's orange '?' icons on your radar. Complete all sequential storyline strands for at least 8 unique characters.
+          </p>
+          <div class="stage-milestones">
+            <span class="milestone-label">Key Strands:</span>
+            <ul>
+              <li><strong>Andy (Road to Rehabilitation):</strong> Conclude the parole officer sting operations in Port Gellhorn.</li>
+              <li><strong>Kenton (This Was No Boat Accident):</strong> Complete underwater wreckage salvage contracts in the Keys.</li>
+              <li><strong>Billy (The Lone Rider):</strong> Defend outlaw biker territory in the western county badlands.</li>
+              <li><strong>Randy (Supply &amp; Demand):</strong> Escort agricultural contraband air-drops in Ambrosia.</li>
+              <li><strong>Tyrone (Spin On This!):</strong> Master gymkhana drift trials at the Vice Beach industrial container terminal.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stage 3 -->
+      <article class="stage-card">
+        <div class="stage-badge">Stage 3</div>
+        <div class="stage-content">
+          <div class="stage-header">
+            <h3>Leonida 100% Collectibles &amp; Map Exploration</h3>
+            <span class="stage-time">Approx. 20 - 25 Hours</span>
+          </div>
+          <p class="stage-desc">
+            Systematically clear map fog and collect all world items necessary for the Gold trophy <em>A Long Road</em>.
+          </p>
+          <div class="stage-milestones">
+            <span class="milestone-label">Checklist Objectives:</span>
+            <ul>
+              <li><strong>You WAiNKer!:</strong> Take geotagged smartphone selfies at 100 landmarks across the state.</li>
+              <li><strong>Don't Touch My Deck:</strong> Assemble 3 full 20-card collectible card sets.</li>
+              <li><strong>Cunning Stunts:</strong> Land 250 stunt jumps, billboard ramps, and canal leaps using a modified Pegassi Bati 801.</li>
+              <li><strong>Positive Mental Attitude:</strong> Meditate at all 15 scenic viewpoints across Leonida.</li>
+              <li><strong>The Goodtime State:</strong> Uncover 100% of the world map fog of war.</li>
+              <li><strong>Little Boxes:</strong> Buy all 7 garage properties on Dynasty 8 Real Estate.</li>
+              <li><strong>Whip It Good:</strong> Sit behind the wheel of 100 distinct vehicle classes.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stage 4 -->
+      <article class="stage-card">
+        <div class="stage-badge">Stage 4</div>
+        <div class="stage-content">
+          <div class="stage-header">
+            <h3>Miscellaneous Stunts and Cleanup</h3>
+            <span class="stage-time">Approx. 8 - 10 Hours</span>
+          </div>
+          <p class="stage-desc">
+            Mop up remaining miscellaneous combat milestones, minigames, and syndicate challenges.
+          </p>
+          <div class="stage-milestones">
+            <span class="milestone-label">Cleanup Checkpoints:</span>
+            <ul>
+              <li><strong>The Shootist:</strong> Earn gold medals in all Ammu-Nation firing range weapons categories.</li>
+              <li><strong>Top Fun:</strong> Win 1st place in all 6 drone race courses across Leonida.</li>
+              <li><strong>Earn Cash, Not Kudos:</strong> Win 20 sanctioned street, off-road, and water races.</li>
+              <li><strong>Gunslinger:</strong> Score 5 headshot kills in a single Combat Focus activation.</li>
+              <li><strong>Dime on the Dollar:</strong> Launder $250,000 in marked robbery currency through fronts.</li>
+              <li><strong>Let's Go Bowling:</strong> Roll a Turkey (3 consecutive strikes) at Kolt &amp; Associates.</li>
+              <li><strong>Vice Got a Price!:</strong> Collect your well-earned Platinum Trophy!</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- TAB 3: MISSABLES ALERT -->
+  <section id="tab-missables" class="tab-pane">
+    <div class="missables-header-card">
+      <div class="alert-icon-large">⚠️</div>
+      <div class="alert-header-text">
+        <h2>Point-of-No-Return Tactical Advisory</h2>
+        <p>Grand Theft Auto VI features <strong>5 missable trophies</strong> tied to companion mechanics and critical Chapter 4 narrative splits. Follow this preservation protocol to guarantee you do not miss any of them.</p>
+      </div>
+    </div>
+
+    <!-- Manual Save Protocol -->
+    <div class="protocol-card">
+      <h3>📁 Recommended Manual Save Slots</h3>
+      <div class="slots-grid">
+        <div class="slot-box">
+          <div class="slot-tag">Save Slot 1</div>
+          <h4>Start of Chapter 2</h4>
+          <p>Lucia and Jason establish their first midtown safehouse. Best baseline for free-roam partner crimes (Retail Therapy, Sneakthief, Hot Together).</p>
+        </div>
+        <div class="slot-box">
+          <div class="slot-tag">Save Slot 2</div>
+          <h4>Start of Chapter 3</h4>
+          <p>Before launching into large-scale cartel heists and festival sabotage. Ideal fallback for partnership synergy points.</p>
+        </div>
+        <div class="slot-box">
+          <div class="slot-tag">Save Slot 3</div>
+          <h4>Start of Chapter 4</h4>
+          <p>CRITICAL POINT OF NO RETURN. Branching moral crossroad for <em>Actions Speak Louder</em> occurs here. Keep this save untouched until the credits roll.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed 5 Missable Cards -->
+    <div class="missable-cards-container" id="missableDetailList">
+      <!-- Rendered dynamically by app.js -->
+    </div>
+  </section>
+
+  <!-- TAB 4: BACKUP & DATA -->
+  <section id="tab-backup" class="tab-pane">
+    <div class="backup-grid">
+      <!-- Export Card -->
+      <div class="action-card">
+        <div class="action-card-icon">📤</div>
+        <h3>Export Progress Backup</h3>
+        <p>Download a local JSON backup of your current trophy checks, earned dates, and roadmap completion status.</p>
+        <button id="exportBtn" class="action-btn cyan-btn" type="button">Download trophy-progress.json</button>
+      </div>
+
+      <!-- Import Card -->
+      <div class="action-card">
+        <div class="action-card-icon">📥</div>
+        <h3>Import Progress Backup</h3>
+        <p>Restore your saved progress from a previously downloaded JSON file. Works offline across all browsers.</p>
+        <label class="file-upload-btn action-btn pink-btn">
+          <span>Upload Backup File</span>
+          <input id="importInput" type="file" accept="application/json">
+        </label>
+      </div>
+
+      <!-- Quick Presets Card -->
+      <div class="action-card">
+        <div class="action-card-icon">⚡</div>
+        <h3>Quick Testing Presets</h3>
+        <p>Convenient shortcuts for testing and verifying tracker states across multiple scenarios.</p>
+        <div class="preset-buttons">
+          <button id="presetStoryBtn" class="preset-btn" type="button">Mark Story Trophies Earned (18)</button>
+          <button id="presetMissablesBtn" class="preset-btn" type="button">Mark Missables Earned (5)</button>
+          <button id="presetAllBtn" class="preset-btn" type="button">Mark All 55 Earned (Platinum)</button>
+        </div>
+      </div>
+
+      <!-- Reset Card -->
+      <div class="action-card danger-card">
+        <div class="action-card-icon">🗑️</div>
+        <h3>Reset All Progress</h3>
+        <p>Permanently clear all saved trophy checkboxes and revert progress back to zero. Cannot be undone.</p>
+        <button id="resetAllBtn" class="action-btn red-btn" type="button">Reset All Trophy Checks</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="toast-notification" aria-live="polite"></div>
+
+  <!-- Footer with Keyboard Shortcuts Indicator -->
+  <footer class="app-footer">
+    <div class="shortcuts-bar" aria-label="Keyboard Shortcuts">
+      <span class="shortcuts-title">⌨️ Keyboard Shortcuts:</span>
+      <span class="shortcut-item"><kbd>/</kbd> Focus Search</span>
+      <span class="shortcut-item"><kbd>Esc</kbd> Clear / Reset</span>
+      <span class="shortcut-item"><kbd>T</kbd> Trophies Tab</span>
+      <span class="shortcut-item"><kbd>R</kbd> Roadmap Tab</span>
+      <span class="shortcut-item"><kbd>M</kbd> Missables Filter</span>
+    </div>
+    <div class="footer-content">
+      <p>Grand Theft Auto VI &copy; Rockstar Games. Field Guide Dossier compiled from Leonida State Records &amp; Strategy Archives.</p>
+      <p class="footer-credits">Zero external dependencies &middot; Offline ready &middot; Responsive PS5 Trophy Companion</p>
+    </div>
+  </footer>
 </div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
